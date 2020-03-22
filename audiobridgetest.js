@@ -42,7 +42,7 @@
 // in the presented order. The first working server will be used for
 // the whole session.
 //
-var server = "http://18.194.48.243:8088/janus";
+var server = "https://janus.teleclap.org/janus";
 
 var janus = null;
 var mixertest = null;
