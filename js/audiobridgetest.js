@@ -43,7 +43,6 @@
 // the whole session.
 //
 var server = "https://janus.teleclap.org/janus";
-
 var janus = null;
 var mixertest = null;
 var opaqueId = "audiobridgetest-"+Janus.randomString(12);
