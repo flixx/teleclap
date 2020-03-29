@@ -17,7 +17,7 @@ function joinRoom(roomId, username) {
         return;
     }
     var audiobridge;
-    var audioStream;
+    var session;
     var recording = false;
     var listening = false;
 
@@ -50,15 +50,12 @@ function joinRoom(roomId, username) {
                                 console.log('Successfully joined room ' + roomId);
                                 console.log('Participants: ', msg["participants"]);
                                 audiobridge.createOffer({
-                                    media: {
-                                        video: false,
-                                        audioSend: false,
-                                        audioRecv: true
-                                    },
+                                    media: {video: false},
                                     success: function (jsep) {
-                                        console.log('Offer created (audioSend=false, audioRecv=true)');
+                                        session = jsep;
+                                        console.log('Offer created (audio=true)');
                                         audiobridge.send({
-                                            message: {request: "configure"},
+                                            message: {request: "configure", muted: true},
                                             jsep: jsep
                                         });
                                     },
@@ -91,7 +88,9 @@ function joinRoom(roomId, username) {
                     onremotestream: function (stream) {
                         console.log("New remote stream:");
                         console.log(stream);
-                        audioStream = stream;
+                        var audioElement = getAudioElement();
+                        Janus.attachMediaStream(audioElement, audioStream);
+                        audioElement.volume = 0
                     },
                     oncleanup: function () {
                         console.log("Cleaning up...");
@@ -107,29 +106,20 @@ function joinRoom(roomId, username) {
     return {
         recordAudio: function () {
             if (!recording) {
-                audiobridge.createOffer({
-                    media: {video: false, addAudio: true},
-                    success: function (jsep) {
-                        console.log('Offer updated (addAudio=true)');
-                        audiobridge.send({
-                            message: {
-                                request: "configure",
-                                muted: false
-                            },
-                            jsep: jsep
-                        });
+                audiobridge.send({
+                    message: {
+                        request: "configure",
+                        muted: false
                     },
-                    error: console.error
+                    jsep: session
                 });
-                recording = true;
-                listening = false;
             }
         },
         listenAudio: function () {
             if (!listening) {
-                Janus.attachMediaStream(getAudioElement(), audioStream);
                 listening = true;
-                recording = false;
+                var audioElement = getAudioElement();
+                audioElement.volume = 1;
             }
         }
     };
