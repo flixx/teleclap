@@ -89,7 +89,7 @@ function joinRoom(roomId, username) {
                         console.log("New remote stream:");
                         console.log(stream);
                         var audioElement = getAudioElement();
-                        Janus.attachMediaStream(audioElement, audioStream);
+                        Janus.attachMediaStream(audioElement, stream);
                         audioElement.volume = 0
                     },
                     oncleanup: function () {
