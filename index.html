@@ -1,0 +1,89 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+	<meta charset="utf-8">
+	<title><TeleClap</title>
+	<meta name="description" content="Send your heroes your appreciation remotely.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="apple-touch-icon" href="icon.png">
+	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.4.0/adapter.min.js" ></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" ></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js" ></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.1.0/bootbox.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script type="text/javascript" src="js/janus.js" ></script>
+	<script type="text/javascript" src="js/audiobridgetest.js"></script>
+</head>
+
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+
+  <div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="page-header">
+					<button class="btn btn-default" autocomplete="off" id="start">Start</button>
+				</div>
+				<div class="container hide" id="audiojoin">
+					<div class="row">
+						<span class="label label-info" id="you"></span>
+						<div class="col-md-12" id="controls">
+							<div class="input-group margin-bottom-md hide" id="registernow">
+								<span class="input-group-addon">@</span>
+								<input class="form-control" type="text" placeholder="Choose a display name" autocomplete="off" id="username" onkeypress="return checkEnter(this, event);"></input>
+								<span class="input-group-btn">
+									<button class="btn btn-success" autocomplete="off" id="register">Join the room</button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="container hide" id="room">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">Participants <span class="label label-info hide" id="participant"></span>
+									<button class="btn-xs btn-danger hide pull-right" autocomplete="off" id="toggleaudio">Mute</button></h3>
+								</div>
+								<div class="panel-body">
+									<ul id="list" class="list-group">
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">Mixed Audio</span></h3>
+								</div>
+								<div class="panel-body" id="mixedaudio"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<hr>
+		<div class="footer">
+		</div>
+	</div>
+	<hr>
+	<div>
+			<button class="btn btn-default" autocomplete="off" id="reccord">TeleClap</button>
+
+			<button class="btn btn-default" autocomplete="off" id="listen">Listen to all</button>
+	</div>
+	<div id="app"></div>
+	<script src="/dist/build.js"></script>
+</body>
+
+</html>
