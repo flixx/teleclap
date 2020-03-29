@@ -1,0 +1,20 @@
+html {
+    @include font-style-text;
+    line-height: 1.15;
+    color: $color-grey;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @include font-style-heading;
+}
+
+a:link,
+a:visited {
+    color: inherit;
+    text-decoration: inherit;
+}

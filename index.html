@@ -19,6 +19,10 @@
 	<meta name="msapplication-config" content="/media/favicons/browserconfig.xml">
 	<meta name="theme-color" content="#eb7070">
 
+	<!-- styles -->
+	<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/main.min.css">
+
 	<!-- scripts -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.4.0/adapter.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -30,69 +34,13 @@
 	<script type="text/javascript" src="js/teleclap.js"></script>
 </head>
 
-<body>
+<body class="bg-primary text-white">
 	<!--[if IE]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
 	<![endif]-->
 
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="page-header">
-					<button class="btn btn-default" autocomplete="off" id="start">Start</button>
-				</div>
-				<div class="container hide" id="audiojoin">
-					<div class="row">
-						<span class="label label-info" id="you"></span>
-						<div class="col-md-12" id="controls">
-							<div class="input-group margin-bottom-md hide" id="registernow">
-								<span class="input-group-addon">@</span>
-								<input class="form-control" type="text" placeholder="Choose a display name" autocomplete="off" id="username" onkeypress="return checkEnter(this, event);"></input>
-								<span class="input-group-btn">
-									<button class="btn btn-success" autocomplete="off" id="register">Join the room</button>
-								</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="container hide" id="room">
-					<div class="row">
-						<div class="col-md-6">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h3 class="panel-title">Participants <span class="label label-info hide" id="participant"></span>
-										<button class="btn-xs btn-danger hide pull-right" autocomplete="off" id="toggleaudio">Mute</button></h3>
-								</div>
-								<div class="panel-body">
-									<ul id="list" class="list-group">
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h3 class="panel-title">Mixed Audio</span></h3>
-								</div>
-								<div class="panel-body" id="mixedaudio"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<hr>
-		<div class="footer">
-		</div>
-	</div>
-	<hr>
-	<div>
-		<button class="btn btn-default" autocomplete="off" id="record">TeleClap</button>
-
-		<button class="btn btn-default" autocomplete="off" id="listen">Listen to all</button>
-	</div>
 	<div id="app"></div>
+
 	<script src="/dist/build.js"></script>
 </body>
 

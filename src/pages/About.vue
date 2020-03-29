@@ -1,15 +1,19 @@
 <template>
   <main-layout>
-    <p>About page</p>
+    <section>
+      <div class="container">
+        <p>About page</p>
+      </div>
+    </section>
   </main-layout>
 </template>
 
 <script>
-  import MainLayout from '../layouts/Main.vue'
+import MainLayout from "../layouts/Main.vue";
 
-  export default {
-    components: {
-      MainLayout
-    }
+export default {
+  components: {
+    MainLayout
   }
+};
 </script>
