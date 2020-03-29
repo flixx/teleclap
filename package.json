@@ -8,7 +8,7 @@
     "dev": "webpack-dev-server --inline --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "predeploy": "npm run build",
-    "deploy": "echo 'teleclap.org' > ./dist/CNAME && gh-pages -d ."
+    "deploy": "gh-pages -d ."
   },
   "dependencies": {
     "vue": "^2.3.3"
