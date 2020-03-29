@@ -2,7 +2,7 @@ var room;
 
 function init() {
     Janus.init({
-        debug: true,
+        debug: "all",
         callback: function () {
             room = joinRoom(1234, "teleclapper");
             getRecordButton().addEventListener("click", room.recordAudio);
@@ -29,7 +29,7 @@ function joinRoom(roomId, username) {
                     plugin: "janus.plugin.audiobridge",
                     opaqueId: "audiobridgetest-" + Janus.randomString(12),
                     success: function (pluginHandle) {
-                        Janus.debug('Successfully attached to audiobridge.');
+                        console.log('Successfully attached to audiobridge.');
                         audiobridge = pluginHandle;
                         audiobridge.send({
                             message: {
@@ -41,63 +41,76 @@ function joinRoom(roomId, username) {
                     },
                     error: console.log,
                     onmessage: function (msg, jsep) {
-                        Janus.debug("Received message:");
-                        Janus.debug(msg);
+                        console.log("Received message:");
+                        console.log(msg);
                         var event = msg["audiobridge"];
                         if (event) {
                             if (event === 'joined') {
                                 // Successfully joined the room
-                                Janus.debug('Successfully joined room ' + roomId);
-                                Janus.debug('Participants: ', msg["participants"])
+                                console.log('Successfully joined room ' + roomId);
+                                console.log('Participants: ', msg["participants"]);
+                                audiobridge.createOffer({
+                                    media: {
+                                        video: false,
+                                        audioSend: false,
+                                        audioRecv: true
+                                    },
+                                    success: function (jsep) {
+                                        console.log('Offer created (audioSend=false, audioRecv=true)');
+                                        audiobridge.send({
+                                            message: {request: "configure"},
+                                            jsep: jsep
+                                        });
+                                    },
+                                    error: console.error
+                                });
                             } else if (event === "roomchanged") {
                                 // The user switched to a different room
                                 if (msg['participants']) {
-                                    Janus.debug('Participants: ', msg["participants"])
+                                    console.log('Participants: ', msg["participants"])
                                 }
                             } else if (event === "destroyed") {
                                 // The room has beed destroyed
                                 window.location.reload();
                             } else if (event === "event") {
                                 if (msg["participants"]) {
-                                    Janus.debug('Participants: ', msg["participants"])
+                                    console.log('Participants: ', msg["participants"])
                                 } else if (msg["error"]) {
-                                    Janus.error('Room ' + roomId + 'does not exist!');
+                                    console.log('Room ' + roomId + 'does not exist!');
                                     audiobridge.destroy();
                                     // TODO: create room and rejoin
                                 } else if (msg["leaving"]) {
-                                    Janus.debug('Participant left: ' + msg["leaving"])
+                                    console.log('Participant left: ' + msg["leaving"])
                                 }
                             }
                             if (jsep) {
-                                audiobridge.handleRemoteJsep({
-                                    jsep: jsep
-                                });
+                                audiobridge.handleRemoteJsep({jsep: jsep});
                             }
                         }
                     },
                     onremotestream: function (stream) {
-                        Janus.debug("New local stream:");
-                        Janus.debug(stream);
+                        console.log("New remote stream:");
+                        console.log(stream);
                         audioStream = stream;
                     },
                     oncleanup: function () {
-                        Janus.debug("Cleaning up...");
+                        console.log("Cleaning up...");
                         recording = false;
-                        listending = false;
+                        listening = false;
                     }
                 })
         },
-        error: Janus.error,
+        error: console.error,
         destroyed: window.location.reload
     });
 
     return {
         recordAudio: function () {
             if (!recording) {
-                recording = true;
                 audiobridge.createOffer({
-                    media: {video: false},
+                    media: {video: false, addAudio: true},
                     success: function (jsep) {
+                        console.log('Offer updated (addAudio=true)');
                         audiobridge.send({
                             message: {
                                 request: "configure",
@@ -106,14 +119,17 @@ function joinRoom(roomId, username) {
                             jsep: jsep
                         });
                     },
-                    error: Janus.error
+                    error: console.error
                 });
+                recording = true;
+                listening = false;
             }
         },
         listenAudio: function () {
             if (!listening) {
-                listening = true;
                 Janus.attachMediaStream(getAudioElement(), audioStream);
+                listening = true;
+                recording = false;
             }
         }
     };
