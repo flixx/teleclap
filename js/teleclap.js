@@ -1,44 +1,27 @@
 var room;
-var deviceId;
-
-function printAudioInputs() {
-    navigator.mediaDevices.enumerateDevices()
-        .then(function (devices) {
-            devices.forEach(function (device) {
-                if (device.kind === 'audioinput') {
-                    console.log(device.label + " (" + device.deviceId + ")");
-                }
-            });
-        })
-}
+var deviceId = null;
 
 function init() {
     Janus.init({
         debug: "all",
         callback: function () {
-            getRecordButton().addEventListener("click", function () {
-                if (room) {
-                    room.destroy();
-                }
-                room = joinRoom(1234, "teleclapper", 'record', deviceId);
-            });
-            getListenButton().addEventListener("click", function () {
-                if (room) {
-                    room.destroy();
-                }
-                room = joinRoom(1234, "teleclapper", 'listen');
-            });
+            room = joinRoom(1234, "teleclapper");
+            getRecordButton().addEventListener("click", room.recordAudio);
+            getListenButton().addEventListener("click", room.listenAudio);
         }
     });
 }
 
-function joinRoom(roomId, username, mode, deviceId) {
+function joinRoom(roomId, username) {
     if (!Janus.isWebrtcSupported()) {
         alert("No WebRTC support!");
         return;
     }
     var audiobridge;
     var session;
+    var recording = false;
+    var listening = false;
+
     var janus = new Janus({
         server: "https://janus.teleclap.org/janus",
         success: function () {
@@ -68,19 +51,18 @@ function joinRoom(roomId, username, mode, deviceId) {
                                 console.log('Successfully joined room ' + roomId);
                                 console.log('Participants: ', msg["participants"]);
                                 var audio;
-                                if (deviceId) {
-                                    audio = {audio: {deviceId: deviceId}}
-                                } else {
+                                if (deviceId === null) {
                                     audio = true
+                                } else {
+                                    audio = {deviceId: deviceId}
                                 }
                                 audiobridge.createOffer({
                                     media: {video: false, audio: audio},
-                                    success: function () {
+                                    success: function (jsep) {
                                         session = jsep;
                                         console.log('Offer created (audio=true)');
-                                        var muted = !(mode === 'record' || mode === 'both');
                                         audiobridge.send({
-                                            message: {request: "configure", muted: muted},
+                                            message: {request: "configure", muted: true},
                                             jsep: jsep
                                         });
                                     },
@@ -115,21 +97,39 @@ function joinRoom(roomId, username, mode, deviceId) {
                         console.log(stream);
                         var audioElement = getAudioElement();
                         Janus.attachMediaStream(audioElement, stream);
-                        if (mode === 'listen' || mode === 'both') {
-                            audioElement.volume = 1
-                        } else {
-                            audioElement.volume = 0
-                        }
-
+                        audioElement.volume = 0
                     },
                     oncleanup: function () {
                         console.log("Cleaning up...");
+                        recording = false;
+                        listening = false;
                     }
                 })
         },
         error: console.error,
         destroyed: window.location.reload
     });
+
+    return {
+        recordAudio: function () {
+            if (!recording) {
+                audiobridge.send({
+                    message: {
+                        request: "configure",
+                        muted: false
+                    },
+                    jsep: session
+                });
+            }
+        },
+        listenAudio: function () {
+            if (!listening) {
+                listening = true;
+                var audioElement = getAudioElement();
+                audioElement.volume = 1;
+            }
+        }
+    };
 }
 
 function getAudioElement() {
@@ -152,4 +152,4 @@ function getListenButton() {
     return document.getElementById('listen');
 }
 
-document.addEventListener("DOMContentLoaded", init);
+//document.addEventListener("DOMContentLoaded", init);
