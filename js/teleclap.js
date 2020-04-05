@@ -59,7 +59,6 @@ function joinRoom(roomId, username, mode, deviceId) {
                     },
                     error: console.log,
                     onmessage: function (msg, jsep) {
-                        session = jsep;
                         console.log("Received message:");
                         console.log(msg);
                         var event = msg["audiobridge"];
@@ -77,6 +76,7 @@ function joinRoom(roomId, username, mode, deviceId) {
                                 audiobridge.createOffer({
                                     media: {video: false, audio: audio},
                                     success: function () {
+                                        session = jsep;
                                         console.log('Offer created (audio=true)');
                                         var muted = !(mode === 'record' || mode === 'both');
                                         audiobridge.send({
