@@ -1,4 +1,5 @@
 var room;
+var deviceId = null;
 
 function init() {
     Janus.init({
@@ -49,8 +50,14 @@ function joinRoom(roomId, username) {
                                 // Successfully joined the room
                                 console.log('Successfully joined room ' + roomId);
                                 console.log('Participants: ', msg["participants"]);
+                                var audio;
+                                if (deviceId === null) {
+                                    audio = true
+                                } else {
+                                    audio = {deviceId: deviceId}
+                                }
                                 audiobridge.createOffer({
-                                    media: {video: false},
+                                    media: {video: false, audio: audio},
                                     success: function (jsep) {
                                         session = jsep;
                                         console.log('Offer created (audio=true)');
@@ -145,4 +152,4 @@ function getListenButton() {
     return document.getElementById('listen');
 }
 
-document.addEventListener("DOMContentLoaded", init);
+//document.addEventListener("DOMContentLoaded", init);
