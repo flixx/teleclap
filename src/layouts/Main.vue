@@ -14,13 +14,16 @@
             <v-link class="nav-link" href="/">Home</v-link>
           </li>
           <li>
-            <v-link class="nav-link" href="/about" title="About">About</v-link>
+            <v-link class="nav-link" href="/test-room" title="Test Room">Test Room</v-link>
+          </li>
+          <li>
+            <v-link class="nav-link" href="/open-room" title="Get Started">Get Started</v-link>
           </li>
         </ul>
       </div>
     </nav>
 
-    <main class="bg-dark">
+    <main>
       <slot></slot>
     </main>
 

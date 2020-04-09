@@ -43,11 +43,45 @@ nav {
 
 main {
     flex-grow: 1;
+    background-color: $color-dark;
 }
 
 section {
     padding-top: 5em;
     padding-bottom: 5em;
+}
+
+.hero-section {
+
+    .container {
+        display: grid;
+        grid-column-gap: 3em;
+        grid-row-gap: 2em;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        align-items: center;
+        grid-auto-flow: row;
+    }
+
+    .hero-image {
+        // background-image: url(/media/images/AdobeStock_273989383_Preview.png);
+        // background-repeat: no-repeat;
+        // background-size: contain;
+        // height: 0;
+        // padding-bottom: 125%;
+        grid-column: span 1;
+
+        img {
+            width: 250px;
+        }
+    }
+
+    .hero-content {
+        grid-column: span 2;
+    }
+
+    p {
+        max-width: 24em;
+    }
 }
 
 .container {
@@ -70,3 +104,19 @@ footer {
     background-color: lighten($color-dark, 3.5);
     color: rgba(#fff, .7);
 }
+
+img {
+    max-width: 100%;
+}
+
+// Small devices
+@media (min-width: 500px) {}
+
+// Medium devices
+@media (min-width: 700px) {}
+
+// Large devices
+@media (min-width: 1000px) {}
+
+// Extra large devices
+@media (min-width: 1400px) {}

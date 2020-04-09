@@ -1,4 +1,5 @@
 export default {
   '/': 'Home',
-  '/about': 'About'
+  '/test-room': 'TestRoom',
+  '/open-room': 'OpenRoom'
 }

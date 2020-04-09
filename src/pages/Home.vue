@@ -1,43 +1,33 @@
 <template>
   <main-layout>
-    <section>
+    <section class="hero-section bg-dark">
       <div class="container">
-        <button class="btn btn-primary" autocomplete="off" id="record">TeleClap</button>
-        <button class="btn btn-primary" autocomplete="off" id="listen">Listen to all</button>
+        <div class="hero-image">
+          <img src="/media/images/AdobeStock_273989383_Preview.png" alt="musicians hero image" />
+        </div>
+        <div class="hero-content">
+          <h1>Bring your live stream audience closer to you</h1>
+          <p class="lead">Receive real-time applause from your streaming audience with TeleClap.</p>
+          <v-link class="btn btn-primary" href="/open-room">Create a Room</v-link>
+        </div>
       </div>
     </section>
 
     <section>
-      <div class="container">
-        <h1>Open a new Room</h1>
-        <input type="text" autocomplete="off" v-model="roomName" data-lpignore="true" />
-        <button v-on:click="openRoom" id="openRoom">Open</button>
-      </div>
+      <div class="container"></div>
     </section>
   </main-layout>
 </template>
 
 <script>
+import VLink from "../components/VLink.vue";
 import MainLayout from "../layouts/Main.vue";
 import routes from "../routes";
-import utils from "../utils";
 
 export default {
   components: {
-    MainLayout
-  },
-  data: function() {
-    return {
-      roomName: ""
-    };
-  },
-  methods: {
-    openRoom: function(event) {
-      event.preventDefault();
-      var slug = utils.slugify(this.roomName);
-      this.$root.currentRoute = slug;
-      window.history.pushState(null, slug, slug);
-    }
+    MainLayout,
+    VLink
   }
 };
 </script>
