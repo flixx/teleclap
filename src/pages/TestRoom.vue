@@ -23,7 +23,7 @@ export default {
   components: {
     MainLayout
   },
-  created: () => {
+  mounted: () => {
     $(() => {
       getListenButton().addEventListener("click", function() {
         initTeleClap(true, false);
