@@ -1,6 +1,8 @@
 html,
 body {
     min-height: 100vh;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 .page-wrapper {
@@ -10,34 +12,11 @@ body {
 }
 
 nav {
-
-    .nav-brand {
+    .container {
         display: flex;
         align-items: center;
-        font-family: $font-family-headings;
-        font-weight: 600;
-        font-size: 1.5em;
-        padding: .5em 0;
-
-        img {
-            margin-right: .5em;
-        }
-    }
-
-    .navbar-nav {
-        display: flex;
-        padding-left: 0;
-        margin-bottom: 0;
-        list-style: none;
-
-        li {
-            margin-left: 1em;
-        }
-
-    }
-
-    .nav-link.active {
-        text-decoration: underline;
+        justify-content: space-between;
+        flex-wrap: wrap;
     }
 }
 
@@ -90,12 +69,6 @@ section {
     padding: 0 2em;
     margin-left: auto;
     margin-right: auto;
-
-    nav & {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
 }
 
 footer {
@@ -110,7 +83,7 @@ img {
 }
 
 // Small devices
-@media (min-width: 500px) {}
+@media (min-width: 550px) {}
 
 // Medium devices
 @media (min-width: 700px) {}

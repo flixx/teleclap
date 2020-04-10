@@ -22,24 +22,32 @@
     text-align: center;
 }
 
+.mt-0 {
+    margin-top: 0;
+}
+
 .mb-0 {
     margin-bottom: 0;
 }
 
-.mb-1 {
-    margin-bottom: .5em;
-}
+@for $i from 1 through 4 {
+    .mt-#{$i} {
+        margin-top: #{$i/2}em;
+    }
 
-.mb-2 {
-    margin-bottom: 1em;
-}
+    .mb-#{$i} {
+        margin-bottom: #{$i/2}em;
+    }
 
-.mb-3 {
-    margin-bottom: 2em;
-}
+    .mv-#{$i} {
+        margin-top: #{$i/2}em;
+        margin-bottom: #{$i/2}em;
+    }
 
-.mb-4 {
-    margin-bottom: 4em;
+    .mh-#{$i} {
+        margin-left: #{$i/2}em;
+        margin-right: #{$i/2}em;
+    }
 }
 
 .lead {
