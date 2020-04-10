@@ -8,8 +8,8 @@
           style="max-width:20em"
         >Use this public test room to try the audio recording and listening</p>
         <div>
-          <button class="btn btn-primary" autocomplete="off" id="record">Record</button>
-          <button class="btn btn-primary" autocomplete="off" id="listen">Listen to all</button>
+          <button class="btn btn-primary mh-1 mb-1" autocomplete="off" id="record">Record</button>
+          <button class="btn btn-primary mh-1 mb-1" autocomplete="off" id="listen">Listen to all</button>
         </div>
       </div>
     </section>
