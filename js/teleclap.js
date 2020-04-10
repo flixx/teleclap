@@ -1,4 +1,3 @@
-var deviceId = null;
 var server = "https://janus.teleclap.org/janus";
 var initialized = false;
 
@@ -91,9 +90,9 @@ function initTeleClap(listening, recording) {
                                     webrtcUp = true;
                                     // Publish our stream
                                     var audio;
-                                    if (deviceId) {
+                                    if (sessionStorage.deviceId) {
                                         audio = {
-                                            deviceId: deviceId
+                                            deviceId: sessionStorage.deviceId
                                         }
                                     } else {
                                         audio = true
