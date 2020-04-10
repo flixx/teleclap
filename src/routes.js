@@ -1,5 +1,5 @@
 export default {
-  '/': 'Home',
+  '': 'Home',
   '#test-room': 'TestRoom',
   '#open-room': 'OpenRoom'
 }
