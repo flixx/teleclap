@@ -40,12 +40,15 @@
 <script>
 import VLink from "../components/VLink.vue";
 
+var $;
+$ = require('jquery');
+
 export default {
   components: {
     VLink
   },
   methods: {
-    toggleNavbar: function(e) {
+    toggleNavbar: () => {
       $(".navbar-nav").toggleClass("expanded");
     }
   }
