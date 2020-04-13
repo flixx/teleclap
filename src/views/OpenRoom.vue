@@ -28,8 +28,7 @@ export default {
       event.preventDefault();
       const slugifiedRoomName = utils.slugify(this.roomName);
       const roomPath = "room/" + slugifiedRoomName;
-      this.$root.currentRoute = roomPath;
-      window.history.pushState(null, this.roomName, roomPath);
+      this.$router.push({ path: roomPath })
     }
   }
 };
