@@ -44,7 +44,7 @@
     padding: .15em 0;
     position: relative;
 
-    &.active {
+    &.router-link-exact-active {
         &::after {
             display: block;
             content: "";
