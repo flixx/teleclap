@@ -2,6 +2,7 @@ import Home from './views/Home'
 import TestRoom from './views/TestRoom'
 import OpenRoom from './views/OpenRoom'
 import Room from './views/Room'
+import IFrameRoom from './views/IFrameRoom'
 
 export default [
   {
@@ -17,7 +18,11 @@ export default [
     component: OpenRoom
   },
   {
-    path: '*',
+    path: '/room/*',
     component: Room
+  },
+  {
+    path: '/iframe/*',
+    component: IFrameRoom
   }
 ]
