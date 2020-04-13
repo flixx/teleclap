@@ -4,18 +4,36 @@ import utils from './utils'
 const server = "https://janus.teleclap.org/janus";
 let initialized = false;
 
-export function initTeleClap(listening, recording, room, deviceId = null) {
+export function initTeleClap(listening, recording, roomName, deviceId, successHandler, errorHandler) {
     if (!initialized) {
         initialized = true;
         Janus.init(
             {
                 debug: "all",
                 callback: function () {
-                    initTeleClap(listening, recording, room)
+                    initTeleClap(listening, recording, roomName, deviceId, successHandler, errorHandler)
                 }
             }
         );
         return
+    }
+
+    function onError(error) {
+        if (errorHandler) {
+            errorHandler(error)
+        } else {
+            console.error('Success!');
+            console.error(error);
+        }
+    }
+
+    function onSuccess(handle) {
+        if (successHandler) {
+            successHandler(handle)
+        } else {
+            console.log('Success!');
+            console.log(handle);
+        }
     }
 
     if (!Janus.isWebrtcSupported()) {
@@ -25,13 +43,11 @@ export function initTeleClap(listening, recording, room, deviceId = null) {
 
     var audiobridge = null;
     var webrtcUp = false;
-
-    var roomId = utils.hashCode(room)
+    var roomId = utils.hashCode(roomName);
 
     var janus = new Janus({
         server: server,
         success: function () {
-            // Attach to AudioBridge plugin
             janus.attach(
                 {
                     plugin: "janus.plugin.audiobridge",
@@ -84,8 +100,7 @@ export function initTeleClap(listening, recording, room, deviceId = null) {
                             } else if (event === "event") {
                                 if (msg["error"] !== undefined && msg["error"] !== null) {
                                     if (msg["error_code"] === 485) {
-                                        onError('Room ' + roomId + ' does not exist.')
-                                        console.log("Create Room " + roomId)
+                                        onError('Room ' + roomId + ' does not exist.');
                                         audiobridge.send({
                                             "message": {
                                                 "request": "create",
@@ -115,44 +130,20 @@ export function initTeleClap(listening, recording, room, deviceId = null) {
                             Janus.attachMediaStream(getAudioElement(), stream);
                         }
                     },
-                    oncleanup: function () {
-                        webrtcUp = false;
-                    }
                 });
         },
         error: onError,
-        destroyed: function () {
-            onError('Janus destroyed.')
-        }
     });
 }
 
-function onError(error) {
-    console.log('Error!');
-    console.log(error);
-}
-
-function onSuccess(handle) {
-    console.log('Success!');
-    console.log(handle);
-}
-
 export function getAudioElement() {
-    var audioElement = document.getElementById('audio');
+    let audioElement = document.getElementById('audio');
     if (audioElement) {
         return audioElement;
     }
-    var newAudioElement = document.createElement('audio');
+    let newAudioElement = document.createElement('audio');
     newAudioElement.id = 'audio';
     newAudioElement.autoplay = true;
     document.body.appendChild(newAudioElement);
     return newAudioElement;
-}
-
-export function getRecordButton() {
-    return document.getElementById('record');
-}
-
-export function getListenButton() {
-    return document.getElementById('listen');
 }
