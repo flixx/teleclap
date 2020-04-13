@@ -3,10 +3,10 @@
     <nav class="navbar bg-primary text-white">
       <div class="container">
         <div class="nav-brand">
-          <a href="/" title="Home">
-            <img src="/media/logo/logo-white.svg" alt="TeleClap Logo" height="32" />
-          </a>
-          <a href="/" title="Home">TeleClap</a>
+          <router-link to="/" title="Home">
+            <img src="./assets/logo-white.svg" alt="TeleClap Logo" height="32" />
+          </router-link>
+          <router-link to="/" title="Home">TeleClap</router-link>
         </div>
 
         <button type="button" class="hamburger-icon" v-on:click="toggleNavbar">
@@ -15,22 +15,18 @@
 
         <ul class="navbar-nav">
           <li>
-            <a class="nav-link" href="/">Home</a>
+            <router-link to="/" class="nav-link">Home</router-link>
           </li>
           <li>
-            <v-link class="nav-link" href="#test-room" title="Test Room">Test Room</v-link>
+            <router-link to="/test-room" class="nav-link" title="Test Room">Test Room</router-link>
           </li>
           <li>
-            <v-link class="btn btn-primary btn-outline" href="#open-room" title="Get Started">Get Started</v-link>
+            <router-link to="open-room" class="btn btn-primary btn-outline" title="Get Started">Get Started</router-link>
           </li>
         </ul>
       </div>
     </nav>
-
-    <main>
-      <slot></slot>
-    </main>
-
+    <router-view/>
     <footer>
       <div class="container">made with ❤️ in Berlin</div>
     </footer>
@@ -38,16 +34,19 @@
 </template>
 
 <script>
-import VLink from "../components/VLink.vue";
+
+var $;
+$ = require('jquery');
 
 export default {
-  components: {
-    VLink
-  },
   methods: {
-    toggleNavbar: function(e) {
+    toggleNavbar: () => {
       $(".navbar-nav").toggleClass("expanded");
     }
   }
 };
 </script>
+
+<style lang='scss'>
+@import "./scss/main.scss";
+</style>

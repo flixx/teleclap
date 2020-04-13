@@ -1,7 +1,12 @@
 var server = "https://janus.teleclap.org/janus";
 var initialized = false;
 
-function initTeleClap(listening, recording) {
+var $;
+$ = require('jquery');
+
+import { Janus } from 'janus-gateway';
+
+export function initTeleClap(listening, recording) {
     if (!initialized) {
         initialized = true;
         Janus.init({
@@ -53,7 +58,6 @@ function initTeleClap(listening, recording) {
                 },
                 error: function (error) {
                     Janus.error("  -- Error attaching plugin...", error);
-                    bootbox.alert("Error attaching plugin... " + error);
                 },
                 consentDialog: function (on) {
                     Janus.debug("Consent dialog should be " + (on ? "on" : "off") + " now");
@@ -79,6 +83,7 @@ function initTeleClap(listening, recording) {
                     Janus.debug(" ::: Got a message :::");
                     Janus.debug(msg);
                     var event = msg["audiobridge"];
+                    var list;
                     Janus.debug("Event: " + event);
                     if (event != undefined && event != null) {
                         if (event === "joined") {
@@ -116,21 +121,20 @@ function initTeleClap(listening, recording) {
                                         },
                                         error: function (error) {
                                             Janus.error("WebRTC error:", error);
-                                            bootbox.alert("WebRTC error... " + JSON.stringify(error));
                                         }
                                     });
                                 }
                             }
                             // Any room participant?
                             if (msg["participants"] !== undefined && msg["participants"] !== null) {
-                                var list = msg["participants"];
+                                list = msg["participants"];
                                 Janus.debug("Got a list of participants:");
                                 Janus.debug(list);
-                                for (var f in list) {
-                                    var id = list[f]["id"];
-                                    var display = list[f]["display"];
-                                    var setup = list[f]["setup"];
-                                    var muted = list[f]["muted"];
+                                for (let f in list) {
+                                    let id = list[f]["id"];
+                                    let display = list[f]["display"];
+                                    let setup = list[f]["setup"];
+                                    let muted = list[f]["muted"];
                                     Janus.debug("  >> [" + id + "] " + display + " (setup=" + setup + ", muted=" + muted + ")");
                                     if ($('#rp' + id).length === 0) {
                                         // Add to the participants list
@@ -156,14 +160,14 @@ function initTeleClap(listening, recording) {
                             // Any room participant?
                             $('#list').empty();
                             if (msg["participants"] !== undefined && msg["participants"] !== null) {
-                                var list = msg["participants"];
+                                list = msg["participants"];
                                 Janus.debug("Got a list of participants:");
                                 Janus.debug(list);
-                                for (var f in list) {
-                                    var id = list[f]["id"];
-                                    var display = list[f]["display"];
-                                    var setup = list[f]["setup"];
-                                    var muted = list[f]["muted"];
+                                for (let f in list) {
+                                    let id = list[f]["id"];
+                                    let display = list[f]["display"];
+                                    let setup = list[f]["setup"];
+                                    let muted = list[f]["muted"];
                                     Janus.debug("  >> [" + id + "] " + display + " (setup=" + setup + ", muted=" + muted + ")");
                                     if ($('#rp' + id).length === 0) {
                                         // Add to the participants list
@@ -185,19 +189,16 @@ function initTeleClap(listening, recording) {
                         } else if (event === "destroyed") {
                             // The room has been destroyed
                             Janus.warn("The room has been destroyed!");
-                            bootbox.alert("The room has been destroyed", function () {
-                                window.location.reload();
-                            });
                         } else if (event === "event") {
                             if (msg["participants"] !== undefined && msg["participants"] !== null) {
-                                var list = msg["participants"];
+                                list = msg["participants"];
                                 Janus.debug("Got a list of participants:");
                                 Janus.debug(list);
-                                for (var f in list) {
-                                    var id = list[f]["id"];
-                                    var display = list[f]["display"];
-                                    var setup = list[f]["setup"];
-                                    var muted = list[f]["muted"];
+                                for (let f in list) {
+                                    let id = list[f]["id"];
+                                    let display = list[f]["display"];
+                                    let setup = list[f]["setup"];
+                                    let muted = list[f]["muted"];
                                     Janus.debug("  >> [" + id + "] " + display + " (setup=" + setup + ", muted=" + muted + ")");
                                     if ($('#rp' + id).length === 0) {
                                         // Add to the participants list
@@ -218,14 +219,14 @@ function initTeleClap(listening, recording) {
                             } else if (msg["error"] !== undefined && msg["error"] !== null) {
                                 if (msg["error_code"] === 485) {
                                     // This is a "no such room" error: give a more meaningful description
-                                    bootbox.alert(
+                                    console.log(
                                         "<p>Apparently room <code>" + myroom + "</code> (the one this demo uses as a test room) " +
                                         "does not exist...</p><p>Do you have an updated <code>janus.plugin.audiobridge.jcfg</code> " +
                                         "configuration file? If not, make sure you copy the details of room <code>" + myroom + "</code> " +
                                         "from that sample in your current configuration file, then restart Janus and try again."
                                     );
                                 } else {
-                                    bootbox.alert(msg["error"]);
+                                    console.log(msg["error"]);
                                 }
                                 return;
                             }
@@ -291,7 +292,7 @@ function initTeleClap(listening, recording) {
         },
         error: function (error) {
             Janus.error(error);
-            bootbox.alert(error, function () {
+            console.log(error, function () {
                 window.location.reload();
             });
         },
@@ -301,7 +302,7 @@ function initTeleClap(listening, recording) {
     });
 }
 
-function getAudioElement() {
+export function getAudioElement() {
     var audioElement = document.getElementById('audio');
     if (audioElement) {
         return audioElement;
@@ -313,10 +314,10 @@ function getAudioElement() {
     return newAudioElement;
 }
 
-function getRecordButton() {
+export function getRecordButton() {
     return document.getElementById('record');
 }
 
-function getListenButton() {
+export function getListenButton() {
     return document.getElementById('listen');
 }
