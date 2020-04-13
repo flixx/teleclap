@@ -7,29 +7,32 @@
         style="max-width:20em"
       >Use this public test room to try the audio recording and listening</p>
       <div>
-        <button class="btn btn-primary mh-1 mb-1" autocomplete="off" id="record">Record</button>
-        <button class="btn btn-primary mh-1 mb-1" autocomplete="off" id="listen">Listen to all</button>
+        <button class="btn btn-primary mh-1 mb-1" :class="{'recording': recording}" autocomplete="off" id="record" @click="toggleRecord">Record</button>
+        <button class="btn btn-primary mh-1 mb-1" :class="{'listening': listening}" autocomplete="off" id="listen" @click="toggleListen">Listen to all</button>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-var $;
-$ = require('jquery');
-
-import {getListenButton, initTeleClap, getRecordButton} from '../teleclap'
+import {initTeleClap} from '../teleclap'
 
 export default {
-  mounted: () => {
-    $(() => {
-      getListenButton().addEventListener("click", function() {
-        initTeleClap(true, false);
-      });
-      getRecordButton().addEventListener("click", function() {
-        initTeleClap(false, true, sessionStorage.deviceId);
-      });
-    });
+  data() {
+    return {
+      listening: false,
+      recording: false
+    }
+  },
+  methods: {
+    toggleRecord() {
+      this.recording = true;
+      initTeleClap(false, true, sessionStorage.deviceId)
+    },
+    toggleListen() {
+      this.listening = true;
+      initTeleClap(true, false)
+    }
   }
 };
 </script>
