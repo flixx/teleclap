@@ -26,7 +26,11 @@
         </ul>
       </div>
     </nav>
-    <router-view/>
+
+    <main>
+      <router-view/>
+    </main>
+    
     <footer>
       <div class="container">made with ❤️ in Berlin</div>
     </footer>
