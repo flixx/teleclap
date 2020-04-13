@@ -27,11 +27,11 @@ export default {
   methods: {
     toggleRecord() {
       this.recording = true;
-      initTeleClap(false, true, sessionStorage.deviceId)
+      initTeleClap(false, true, "public-test-room", sessionStorage.deviceId)
     },
     toggleListen() {
       this.listening = true;
-      initTeleClap(true, false)
+      initTeleClap(true, false, "public-test-room")
     }
   }
 };

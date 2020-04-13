@@ -1,16 +1,17 @@
 import {Janus} from 'janus-gateway';
+import utils from './utils'
 
 const server = "https://janus.teleclap.org/janus";
 let initialized = false;
 
-export function initTeleClap(listening, recording, deviceId = null) {
+export function initTeleClap(listening, recording, room, deviceId = null) {
     if (!initialized) {
         initialized = true;
         Janus.init(
             {
                 debug: "all",
                 callback: function () {
-                    initTeleClap(listening, recording)
+                    initTeleClap(listening, recording, room)
                 }
             }
         );
@@ -23,8 +24,9 @@ export function initTeleClap(listening, recording, deviceId = null) {
     }
 
     var audiobridge = null;
-    var roomId = 1234;  // Demo room
     var webrtcUp = false;
+
+    var roomId = utils.hashCode(room)
 
     var janus = new Janus({
         server: server,
@@ -83,6 +85,20 @@ export function initTeleClap(listening, recording, deviceId = null) {
                                 if (msg["error"] !== undefined && msg["error"] !== null) {
                                     if (msg["error_code"] === 485) {
                                         onError('Room ' + roomId + ' does not exist.')
+                                        console.log("Create Room " + roomId)
+                                        audiobridge.send({
+                                            "message": {
+                                                "request": "create",
+                                                "room": roomId,
+                                            }
+                                        });
+                                        audiobridge.send({
+                                            "message": {
+                                                "request": "join",
+                                                "room": roomId,
+                                                "display": 'teleclapper'
+                                            }
+                                        });
                                     } else {
                                         onError(msg["error"]);
                                     }
