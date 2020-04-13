@@ -7,7 +7,7 @@
         class="lead"
         style="max-width:20em"
       >Save or share this URL to access this page.</p>
-      <clap-buttons roomName="myPath"/>
+      <clap-buttons />
     </div>
   </section>
 </template>

@@ -23,12 +23,6 @@
 import {initTeleClap} from '@/teleclap'
 
 export default {
-  props: {
-    roomName: {
-      type: String,
-      default: 'testRoom'
-    }
-  },
   data() {
     return {
       buttonsBlocked: false,
@@ -61,12 +55,12 @@ export default {
         this.teleClapHandle.destroy();
       }
       if (state === 'listening') {
-        initTeleClap(true, false, this.roomName, null, (handle) => {
+        initTeleClap(true, false, window.location.href, null, (handle) => {
           this.teleClapHandle = handle;
           this.buttonsBlocked = false
         })
       } else if (state === 'recording') {
-        initTeleClap(false, true, this.roomName, sessionStorage.deviceId, (handle) => {
+        initTeleClap(false, true, window.location.href, sessionStorage.deviceId, (handle) => {
           this.teleClapHandle = handle;
           this.buttonsBlocked = false;
         })

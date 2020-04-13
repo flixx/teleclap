@@ -8,8 +8,7 @@ export default {
         return value.replace(/[-\s]+/g, '-');
     },
     'hashCode': function(value) {
-        var url = new URL(value)
-        var room = url.pathname.replace(/^.*[\\/]/, '')
+        var room = value.replace(/^.*[\\/]/, '')
         var hash = 0, i, chr;
         for (i = 0; i < room.length; i++) {
             chr   = room.charCodeAt(i);
