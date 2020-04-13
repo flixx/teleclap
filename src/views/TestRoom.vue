@@ -27,7 +27,7 @@ export default {
         initTeleClap(true, false);
       });
       getRecordButton().addEventListener("click", function() {
-        initTeleClap(false, true);
+        initTeleClap(false, true, sessionStorage.deviceId);
       });
     });
   }
