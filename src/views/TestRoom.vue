@@ -6,17 +6,17 @@
         class="lead"
         style="max-width:20em"
       >Use this public test room to try the audio recording and listening</p>
-      <clap-buttons/>
+      <clap-button roomName="test-room" allow-listening/>
     </div>
   </section>
 </template>
 
 <script>
-import ClapButtons from "./ClapButtons";
+import ClapButton from "./ClapButton";
 
 export default {
   components: {
-    ClapButtons
+    ClapButton
   }
 };
 </script>

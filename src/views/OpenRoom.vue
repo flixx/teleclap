@@ -26,9 +26,12 @@ export default {
   methods: {
     openRoom: function(event) {
       event.preventDefault();
-      const slugifiedRoomName = utils.slugify(this.roomName);
-      const roomPath = "room/" + slugifiedRoomName;
-      this.$router.push({ path: roomPath })
+      this.$router.push({
+        name: 'room',
+        params: {
+          roomName: utils.slugify(this.roomName)
+        }
+      })
     }
   }
 };

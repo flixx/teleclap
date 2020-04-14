@@ -1,30 +1,17 @@
 <template>
   <section>
-      <div>
-        <button class="btn btn-primary mh-1 mb-1" :class="{'recording': recording}" autocomplete="off" id="record" @click="toggleRecord">Record</button>
-      </div>
+    <h3>TeleClap for {{ roomName }}</h3>
+    <clap-button :room-name="roomName"/>
   </section>
 </template>
 
 <script>
-import {initTeleClap} from '../teleclap'
+    import ClapButton from "./ClapButton";
 
-export default {
-  computed: {
-    myPath: function() {
-      return window.location.href;
-    }
-  },
-  data() {
-    return {
-      recording: false
-    }
-  },
-  methods: {
-    toggleRecord() {
-      this.recording = true;
-      initTeleClap(false, true, this.myPath, sessionStorage.deviceId)
-    },
-  }
-};
+    export default {
+      props: ['roomName'],
+        components: {
+            ClapButton
+        }
+    };
 </script>

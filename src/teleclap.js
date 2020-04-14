@@ -22,7 +22,7 @@ export function initTeleClap(listening, recording, roomName, deviceId, successHa
         if (errorHandler) {
             errorHandler(error)
         } else {
-            console.error('Success!');
+            console.error('Error:');
             console.error(error);
         }
     }
@@ -32,7 +32,6 @@ export function initTeleClap(listening, recording, roomName, deviceId, successHa
             successHandler(handle)
         } else {
             console.log('Success!');
-            console.log(handle);
         }
     }
 

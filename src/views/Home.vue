@@ -1,5 +1,5 @@
 <template>
-    <section class="hero-section bg-dark">
+    <section class="hero-section">
       <div class="container">
         <div class="hero-image">
           <img src="@/assets/musicians.png" alt="musicians hero image" />

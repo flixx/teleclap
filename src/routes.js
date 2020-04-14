@@ -18,11 +18,22 @@ export default [
     component: OpenRoom
   },
   {
-    path: '/room/*',
-    component: Room
+    path: '/room/:roomName',
+    name: 'room',
+    component: Room,
+    props: (route) => ({creatorView: true, ...route.params})
   },
   {
-    path: '/iframe/*',
-    component: IFrameRoom
+    path: '/clap/:roomName',
+    name: 'clap',
+    component: Room,
+    props: true
+
+  },
+  {
+    path: '/iframe/:roomName',
+    name: 'iframeRoom',
+    component: IFrameRoom,
+    props: true
   }
 ]
