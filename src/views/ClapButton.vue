@@ -6,6 +6,7 @@
       :disabled="stateTransitioning"
       @click="toggleRecord"
     >
+      <i class="icon icon-microphone"></i>
       <span v-if="recording">Recording...</span><span v-else>Record</span>
     </button>
     <button
@@ -15,6 +16,7 @@
       :disabled="stateTransitioning"
       @click="toggleListen"
     >
+      <i class="icon icon-speaker"></i>
       <span v-if="listening">Listening...</span><span v-else>Listen to all</span>
     </button>
   </div>
@@ -93,11 +95,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-  button.active {
-    filter: brightness(125%);
-  }
-  button:disabled {
-    color: lightgrey;
-  }
-</style>

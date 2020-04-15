@@ -32,7 +32,7 @@
     </main>
     
     <footer>
-      <div class="container">made with ❤️ in Berlin</div>
+      <div class="container">made with <i class="icon icon-heart"></i> in Berlin</div>
     </footer>
   </div>
 </template>
