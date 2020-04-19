@@ -6,8 +6,7 @@ body {
 }
 
 .page-wrapper {
-    display: flex;
-    flex-direction: column;
+    @include flex-column;
     min-height: 100vh;
 }
 
@@ -23,11 +22,13 @@ nav {
 main {
     flex-grow: 1;
     background-color: $color-dark;
+    @include flex-column;
 }
 
 section {
     padding-top: 5em;
     padding-bottom: 5em;
+    @include flex-column;
 }
 
 .hero-section {

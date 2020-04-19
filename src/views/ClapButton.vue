@@ -1,24 +1,31 @@
 <template>
-  <div>
-    <button
-      class="btn btn-primary mh-1 mb-1"
-      :class="{'active': recording}"
-      :disabled="stateTransitioning"
-      @click="toggleRecord"
-    >
-      <i class="icon icon-microphone"></i>
-      <span v-if="recording">Recording...</span><span v-else>Record</span>
-    </button>
-    <button
-      v-if="allowListening"
-      class="btn btn-primary mh-1 mb-1"
-      :class="{'active': listening}"
-      :disabled="stateTransitioning"
-      @click="toggleListen"
-    >
-      <i class="icon icon-speaker"></i>
-      <span v-if="listening">Listening...</span><span v-else>Listen to all</span>
-    </button>
+  <div class="clap-wrapper flex-1">
+    <div>
+      <button
+        class="btn btn-primary mh-1 mb-1"
+        :class="{'active': recording}"
+        :disabled="stateTransitioning"
+        @click="toggleRecord"
+      >
+        <i class="icon icon-microphone"></i>
+        <span v-if="recording">Recording...</span><span v-else>Record</span>
+      </button>
+      <button
+        v-if="allowListening"
+        class="btn btn-primary mh-1 mb-1"
+        :class="{'active': listening}"
+        :disabled="stateTransitioning"
+        @click="toggleListen"
+      >
+        <i class="icon icon-speaker"></i>
+        <span v-if="listening">Listening...</span><span v-else>Listen to all</span>
+      </button>
+    </div>
+
+    <div class="clapping-wrapper flex-1">
+      <img v-if="recording" class="clapping" src="@/assets/clapping.png" alt="clapping">
+      <p v-if="recording">Clap now!</p>
+    </div>    
   </div>
 </template>
 

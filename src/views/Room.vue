@@ -1,6 +1,6 @@
 <template>
-  <section>
-    <div class="container content-center-horizontal text-center">
+  <section class="flex-1">
+    <div class="container content-center-horizontal text-center flex-1">
       <h1><span v-if="creatorView">Your room: </span><span v-else>TeleClap for </span>{{ roomName }}</h1>
       <div v-if="creatorView">
         <input class="full-width" type="text" :value="clapLink" readonly/>
@@ -45,10 +45,10 @@ export default {
 };
 </script>
 <style scoped>
-  .lead {
-    max-width: 20em;
-  }
-  a {
-    text-decoration: underline;
-  }
+.lead {
+  max-width: 20em;
+}
+a {
+  text-decoration: underline;
+}
 </style>

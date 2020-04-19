@@ -176,6 +176,38 @@ input[type="week"] {
     }
 }
 
+.clap-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.clapping-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img.clapping {
+        width: 100px;
+        height: 100px;
+        margin: 2em 0 1em;
+        background-color: $color-primary;
+        border-radius: 50%;
+        animation: scale-in 300ms cubic-bezier(.18, .89, .32, 1.28);
+    }
+}
+
+@keyframes scale-in {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+
 // Small devices
 @media (min-width: 550px) {
     .navbar-nav {

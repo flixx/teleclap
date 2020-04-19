@@ -1,6 +1,6 @@
 <template>
-  <section>
-    <div class="container content-center-horizontal text-center">
+  <section class="flex-1">
+    <div class="container content-center-horizontal text-center flex-1">
       <h1>Public Test Room</h1>
       <p
         class="lead"

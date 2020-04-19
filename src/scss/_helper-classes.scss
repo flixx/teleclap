@@ -30,6 +30,10 @@
     margin-bottom: 0;
 }
 
+.flex-1 {
+    flex: 1;
+}
+
 @for $i from 1 through 4 {
     .mt-#{$i} {
         margin-top: #{$i/2}em;
@@ -61,7 +65,6 @@
 }
 
 .content-center-horizontal {
-    display: flex;
-    flex-direction: column;
+    @include flex-column;
     align-items: center;
 }
